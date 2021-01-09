@@ -19,13 +19,18 @@ class Login extends CI_Controller{
             $data = [
                 'masuk' => TRUE,
                 'akses' => $is_array_data[0]['pengguna_level'],
-                'user' => $u,
+                //'user' => $u,
+                'user' => $is_array_data[0]['pengguna_nama'],
                 'idadmin' => $is_array_data[0]['pengguna_id']
             ];
             $this->session->set_userdata($data);
             redirect('admin/dashboard');
+        } else {
+          $url = base_url('admin/login');
+          $this->session->set_flashdata('msg','<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert"><i class="fa fa-close"></i></button> Username dan password ada yang salah</div>');
+          redirect($url);
         }
-         var_dump($this->session->userdata());
+        // var_dump($this->session->userdata());
        //  echo json_encode($cadmin);
        //  if($cadmin->num_rows() > 0){
        //   $this->session->set_userdata('masuk',true);

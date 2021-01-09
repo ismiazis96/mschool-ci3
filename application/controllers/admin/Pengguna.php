@@ -104,8 +104,8 @@ class Pengguna extends CI_Controller{
 	                        $config['create_thumb']= FALSE;
 	                        $config['maintain_ratio']= FALSE;
 	                        $config['quality']= '60%';
-	                        $config['width']= 300;
-	                        $config['height']= 300;
+	                        //$config['width']= 300;
+	                        //$config['height']= 300;
 	                        $config['new_image']= './assets/images/'.$gbr['file_name'];
 	                        $this->load->library('image_lib', $config);
 	                        $this->image_lib->resize();
@@ -121,7 +121,7 @@ class Pengguna extends CI_Controller{
                     		$nohp=$this->input->post('xkontak');
 							$level=$this->input->post('xlevel');
                             if (empty($password) && empty($konfirm_password)) {
-                            	$this->m_pengguna->update_pengguna_tanpa_pass($kode,$nama,$jenkel,$username,$password,$email,$nohp,$level,$gambar);
+                            	$this->m_pengguna->update_pengguna_tanpa_pass($kode,$nama,$jenkel,$username,$email,$nohp,$level,$gambar);
 	                    		echo $this->session->set_flashdata('msg','info');
 	               				redirect('admin/pengguna');
      						}elseif ($password <> $konfirm_password) {
@@ -149,7 +149,7 @@ class Pengguna extends CI_Controller{
                     $nohp=$this->input->post('xkontak');
 					$level=$this->input->post('xlevel');
 	            	if (empty($password) && empty($konfirm_password)) {
-                       	$this->m_pengguna->update_pengguna_tanpa_pass_dan_gambar($kode,$nama,$jenkel,$username,$password,$email,$nohp,$level);
+                       	$this->m_pengguna->update_pengguna_tanpa_pass_dan_gambar($kode,$nama,$jenkel,$username,$email,$nohp,$level);
 	                    echo $this->session->set_flashdata('msg','info');
 	               		redirect('admin/pengguna');
      				}elseif ($password <> $konfirm_password) {
@@ -193,6 +193,7 @@ class Pengguna extends CI_Controller{
    
     }
 
+/*
     function lock(){
 		$kode=$this->uri->segment(4);
 		$this->m_pengguna->lock_user($kode);
@@ -203,6 +204,27 @@ class Pengguna extends CI_Controller{
 		$kode=$this->uri->segment(4);
 		$this->m_pengguna->unlock_user($kode);
 		redirect('admin/pengguna');
+	}
+*/
+
+	function nonaktifkan(){
+		if($this->session->userdata('akses')=='1'){
+			$id=$this->input->post('kode');
+			$this->m_pengguna->update_status($id);
+			redirect('admin/pengguna');
+		} else {
+			echo "Halaman tidk ditemukan";
+		}
+	}
+
+	function aktif(){
+		if($this->session->userdata('akses')=='1'){
+			$id=$this->input->post('kode');
+			$this->m_pengguna->update_status_aktif($id);
+			redirect('admin/pengguna');
+		} else {
+			echo "Halaman tidk ditemukan";
+		}
 	}
 
 

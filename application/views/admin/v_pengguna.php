@@ -202,7 +202,7 @@
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Jenis Kelamin</th>
-                    <th>Password</th>
+                    <!-- <th>Password</th> -->
                     <th>Level</th>
                     <th>Status</th>
                     <th style="text-align:center;">Aksi</th>
@@ -215,7 +215,7 @@
                        $pengguna_jenkel=$i['pengguna_jenkel'];
                        $pengguna_email=$i['pengguna_email'];
                        $pengguna_username=$i['pengguna_username'];
-                       $pengguna_password=$i['pengguna_password'];
+                       //$pengguna_password=$i['pengguna_password'];
                        $pengguna_level=$i['pengguna_level'];
                        $pengguna_photo=$i['pengguna_photo'];
                        $pengguna_status=$i['pengguna_status'];
@@ -229,21 +229,21 @@
                   <?php else:?>
                         <td>Perempuan</td>
                   <?php endif;?>
-                  <td><?php echo $pengguna_password;?></td>
+                  <!-- <td><?php echo $pengguna_password;?></td> -->
                   <?php if($pengguna_level=='1'):?>
                         <td>Administrator</td>
                   <?php else:?>
                         <td>Author</td>
                   <?php endif;?>
-                  <?php if($pengguna_status=='1'):?>
-                        <td style="vertical-align: middle;"><a href="<?php echo base_url().'admin/pengguna/lock/'.$pengguna_id;?>" class="btn"><span class="icon-lock-open" title="Unlock"></span></a></td>
-                    <?php else:?>
-                        <td style="vertical-align: middle;"><a href="<?php echo base_url().'admin/pengguna/unlock/'.$pengguna_id;?>" class="btn"><span class="icon-lock" title="Locked"></span></a></td>
-                    <?php endif;?>
+                        <td><?php echo $pengguna_status; ?></td>
+                  <td style="text-align: center;">
+                    <a class="btn" href="#modalHapusUser<?php echo $pengguna_id ?>" data-toggle="modal" title="Non aktif"><span class="fa fa-close"></span> Non Aktif</a>
+                    <a class="btn" href="#modalaktifUser<?php echo $pengguna_id ?>" data-toggle="modal" title="aktif"><span class="fa fa-thumbs-up"></span> Aktif</a>
+                  </td>
                   <td style="text-align:right;">
-                        <a class="btn" data-toggle="modal" data-target="#ModalEdit<?php echo $pengguna_id;?>"><span class="fa fa-pencil"></span></a>
-                        <a class="btn" href="<?php echo base_url().'admin/pengguna/reset_password/'.$pengguna_id;?>"><span class="fa fa-refresh"></span></a>
-                        <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $pengguna_id;?>"><span class="fa fa-trash"></span></a>
+                        <a class="btn" data-toggle="modal" data-target="#ModalEdit<?php echo $pengguna_id;?>" title="Edit"><span class="fa fa-pencil"></span></a>
+                        <a class="btn" href="<?php echo base_url().'admin/pengguna/reset_password/'.$pengguna_id;?>" title="Reset Password"><span class="fa fa-refresh"></span></a>
+                        <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $pengguna_id;?>" title="Hapus"><span class="fa fa-trash"></span></a>
                   </td>
                 </tr>
 				<?php endforeach;?>
@@ -732,6 +732,86 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal non aktif akun -->
+        <?php foreach ($data->result_array() as $i) {
+            $pengguna_id=$i['pengguna_id'];
+            $pengguna_nama=$i['pengguna_nama'];
+            $pengguna_jenkel=$i['pengguna_jenkel'];
+            $pengguna_email=$i['pengguna_email'];
+            $pengguna_username=$i['pengguna_username'];
+            $pengguna_password=$i['pengguna_password'];
+            $pengguna_nohp=$i['pengguna_nohp'];
+            $pengguna_level=$i['pengguna_level'];
+            $pengguna_photo=$i['pengguna_photo'];
+          ?>
+
+            <div id="modalHapusUser<?php echo $pengguna_id ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h3 class="modal-title" id="myModalLabel">Nonaktifkan akun</h3>
+                                </div>
+
+                                <form class="form-horizontal" method="post" action="<?php echo base_url().'admin/pengguna/nonaktifkan'?>">
+                                    
+                                    <div class="modal-body">
+                                        <p>Yakin mau nonaktifkan Akses ini ..?</p>
+                                        <input name="kode" type="hidden" value="<?php echo $pengguna_id; ?>">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
+                                        <button type="submit" class="btn btn-danger">Non aktif</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
+
+                
+
+          <!-- Modal aktif akun -->
+        <?php foreach ($data->result_array() as $i) {
+            $pengguna_id=$i['pengguna_id'];
+            $pengguna_nama=$i['pengguna_nama'];
+            $pengguna_jenkel=$i['pengguna_jenkel'];
+            $pengguna_email=$i['pengguna_email'];
+            $pengguna_username=$i['pengguna_username'];
+            $pengguna_password=$i['pengguna_password'];
+            $pengguna_nohp=$i['pengguna_nohp'];
+            $pengguna_level=$i['pengguna_level'];
+            $pengguna_photo=$i['pengguna_photo'];
+          ?>
+
+          <div id="modalaktifUser<?php echo $pengguna_id ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h3 class="modal-title" id="myModalLabel">Aktifkan Akun</h3>
+                                </div>
+                                <form class="form-horizontal" method="post" action="<?php echo base_url().'admin/pengguna/aktif'?>">
+                                    
+                                    <div class="modal-body">
+                                        <p>Yakin mau Aktifkan akses ini..?</p>
+                                        <input name="kode" type="hidden" value="<?php echo $pengguna_id; ?>">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
+                                        <button type="submit" class="btn btn-primary">aktif</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
+
 
 
 <!-- jQuery 2.2.3 -->

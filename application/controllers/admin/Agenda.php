@@ -7,6 +7,7 @@ class Agenda extends CI_Controller{
             redirect($url);
         };
 		$this->load->model('m_agenda');
+		$this->load->model('m_pengguna');
 		$this->load->library('upload');
 	}
 
@@ -24,13 +25,18 @@ class Agenda extends CI_Controller{
 		$tempat=$this->input->post('xtempat');
 		$waktu=$this->input->post('xwaktu');
 		$keterangan=$this->input->post('xketerangan');
-		$this->m_agenda->simpan_agenda($nama_agenda,$deskripsi,$mulai,$selesai,$tempat,$waktu,$keterangan);
+		$kode=$this->session->userdata('idadmin');
+		$user=$this->m_pengguna->get_pengguna_login($kode);
+		$p=$user->row_array();
+		$user_id=$p['pengguna_id'];
+		$user_nama=$p['pengguna_nama'];
+		$this->m_agenda->simpan_agenda($nama_agenda,$deskripsi,$mulai,$selesai,$tempat,$waktu,$keterangan,$user_id,$user_nama);
 		echo $this->session->set_flashdata('msg','success');
 		redirect('admin/agenda');
 	}
 
 	function update_agenda(){
-		$kode=strip_tags($this->input->post('kode'));
+		$agenda_id=strip_tags($this->input->post('kode'));
 		$nama_agenda=strip_tags($this->input->post('xnama_agenda'));
 		$deskripsi=$this->input->post('xdeskripsi');
 		$mulai=$this->input->post('xmulai');
@@ -38,7 +44,12 @@ class Agenda extends CI_Controller{
 		$tempat=$this->input->post('xtempat');
 		$waktu=$this->input->post('xwaktu');
 		$keterangan=$this->input->post('xketerangan');
-		$this->m_agenda->update_agenda($kode,$nama_agenda,$deskripsi,$mulai,$selesai,$tempat,$waktu,$keterangan);
+		$kode=$this->session->userdata('idadmin');
+		$user=$this->m_pengguna->get_pengguna_login($kode);
+		$p=$user->row_array();
+		$user_id=$p['pengguna_id'];
+		$user_nama=$p['pengguna_nama'];
+		$this->m_agenda->update_agenda($agenda_id,$nama_agenda,$deskripsi,$mulai,$selesai,$tempat,$waktu,$keterangan,$user_id,$user_nama);
 		echo $this->session->set_flashdata('msg','info');
 		redirect('admin/agenda');
 	}

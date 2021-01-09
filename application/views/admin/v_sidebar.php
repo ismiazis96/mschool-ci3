@@ -1,3 +1,9 @@
+<?php
+    $query=$this->db->query("SELECT * FROM tbl_inbox WHERE inbox_status='1'");
+    $query2=$this->db->query("SELECT * FROM tbl_komentar WHERE komentar_status='0'");
+    $jum_comment=$query2->num_rows();
+    $jum_pesan=$query->num_rows();
+?>
 <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->

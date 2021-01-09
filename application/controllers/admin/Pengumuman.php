@@ -7,6 +7,7 @@ class Pengumuman extends CI_Controller{
             redirect($url);
         };
 		$this->load->model('m_pengumuman');
+		$this->load->model('m_pengguna');
 		$this->load->library('upload');
 	}
 
@@ -19,16 +20,26 @@ class Pengumuman extends CI_Controller{
 	function simpan_pengumuman(){
 		$judul=strip_tags($this->input->post('xjudul'));
 		$deskripsi=$this->input->post('xdeskripsi');
-		$this->m_pengumuman->simpan_pengumuman($judul,$deskripsi);
+		$kode=$this->session->userdata('idadmin');
+		$user=$this->m_pengguna->get_pengguna_login($kode);
+		$p=$user->row_array();
+		$user_id=$p['pengguna_id'];
+		$user_nama=$p['pengguna_nama'];	
+		$this->m_pengumuman->simpan_pengumuman($judul,$deskripsi,$user_id,$user_nama);
 		echo $this->session->set_flashdata('msg','success');
 		redirect('admin/pengumuman');
 	}
 
 	function update_pengumuman(){
-		$kode=strip_tags($this->input->post('kode'));
+		$id=strip_tags($this->input->post('kode'));
 		$judul=strip_tags($this->input->post('xjudul'));
 		$deskripsi=$this->input->post('xdeskripsi');
-		$this->m_pengumuman->update_pengumuman($kode,$judul,$deskripsi);
+		$kode=$this->session->userdata('idadmin');
+		$user=$this->m_pengguna->get_pengguna_login($kode);
+		$p=$user->row_array();
+		$user_id=$p['pengguna_id'];
+		$user_nama=$p['pengguna_nama'];
+		$this->m_pengumuman->update_pengumuman($id,$judul,$deskripsi,$user_id,$user_nama);
 		echo $this->session->set_flashdata('msg','info');
 		redirect('admin/pengumuman');
 	}

@@ -217,10 +217,9 @@
   					   $no++;
                        $id=$i['pengumuman_id'];
                        $judul=$i['pengumuman_judul'];
-                       $deskripsi=$i['pengumuman_deskripsi'];
-                       $author=$i['pengumuman_author'];
+                       $deskripsi=$i['pengumuman_deskripsi']; 
                        $tanggal=$i['tanggal'];
-
+                       $author=$i['pengumuman_author'];
                     ?>
                 <tr>
                   <td><?php echo $no;?></td>
@@ -487,8 +486,8 @@ $this->load->view('admin/v_footer');
                 $id=$i['pengumuman_id'];
                 $judul=$i['pengumuman_judul'];
                 $deskripsi=$i['pengumuman_deskripsi'];
-                $author=$i['pengumuman_author'];
                 $tanggal=$i['tanggal'];
+                $author=$i['pengumuman_author'];
             ?>
 	<!--Modal Edit Pengguna-->
         <div class="modal fade" id="ModalEdit<?php echo $id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
